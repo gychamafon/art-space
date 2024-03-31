@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PreviewFun()
+                    ArtSpaceCard()
 
                 }
             }
@@ -55,7 +56,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @Preview(showBackground = true)
-fun PreviewFun() {
+fun ArtSpaceCard() {
     var currentStep by remember {mutableIntStateOf(1)}
     val cats = remember {
         mutableStateOf(listOf(
@@ -63,7 +64,7 @@ fun PreviewFun() {
             CatInfo(R.drawable.british_cat, R.string.british_cat_title, R.string.british_cat_description),
             CatInfo(R.drawable.maine_coon_cat, R.string.maine_coon_title, R.string.maine_coon_description),
             CatInfo(R.drawable.oriental_cat, R.string.oriental_cat_title, R.string.oriental_cat_description),
-            CatInfo(R.drawable.russian_blue_cat, R.string.oriental_cat_title, R.string.oriental_cat_description),
+            CatInfo(R.drawable.russian_blue_cat, R.string.russian_blue_cat_title, R.string.russian_blue_cat_description),
             CatInfo(R.drawable.thai_cat, R.string.thai_cat_title, R.string.thai_cat_description),
         ))
     }
@@ -77,9 +78,9 @@ fun PreviewFun() {
         4 ->
             ArtWorkView(catInfo = cats.value[3], onPreviousClick = { currentStep = 3 }, onNextClick = {currentStep = 5})
         5 ->
-            ArtWorkView(catInfo = cats.value[4], onPreviousClick = { currentStep = 3}, onNextClick = {currentStep = 6})
+            ArtWorkView(catInfo = cats.value[4], onPreviousClick = { currentStep = 4}, onNextClick = {currentStep = 6})
         6 ->
-            ArtWorkView(catInfo = cats.value[5], onPreviousClick = { currentStep = 4 }, onNextClick = {currentStep = 1})
+            ArtWorkView(catInfo = cats.value[5], onPreviousClick = { currentStep = 5 }, onNextClick = {currentStep = 1})
 
 
     }
@@ -101,7 +102,7 @@ fun ArtWorkView(catInfo: CatInfo, onPreviousClick: () -> Unit, onNextClick: ()->
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(20.dp, Color.Gray)
+                    .border(20.dp, Color.Gray).testTag("ArtWorkImage")
             )
         }
         Box(
