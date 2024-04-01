@@ -68,28 +68,20 @@ fun ArtSpaceCard() {
             CatInfo(R.drawable.thai_cat, R.string.thai_cat_title, R.string.thai_cat_description),
         ))
     }
-    when (currentStep){
-        1 ->
-            ArtWorkView(catInfo = cats.value[0], onPreviousClick = {  currentStep = 6}, onNextClick = {currentStep = 2})
-        2 ->
-            ArtWorkView(catInfo = cats.value[1], onPreviousClick = { currentStep = 1 }, onNextClick = {currentStep = 3})
-        3 ->
-            ArtWorkView(catInfo = cats.value[2], onPreviousClick = { currentStep = 2 }, onNextClick = {currentStep = 4})
-        4 ->
-            ArtWorkView(catInfo = cats.value[3], onPreviousClick = { currentStep = 3 }, onNextClick = {currentStep = 5})
-        5 ->
-            ArtWorkView(catInfo = cats.value[4], onPreviousClick = { currentStep = 4}, onNextClick = {currentStep = 6})
-        6 ->
-            ArtWorkView(catInfo = cats.value[5], onPreviousClick = { currentStep = 5 }, onNextClick = {currentStep = 1})
 
-
-    }
+    ArtWorkView(
+        catInfo = cats.value[currentStep - 1],
+        onPreviousClick = { currentStep = if (currentStep > 1) currentStep - 1 else 6 },
+        onNextClick = { currentStep = if (currentStep < 6) currentStep + 1 else 1 }
+    )
 
 }
 
 @Composable
 fun ArtWorkView(catInfo: CatInfo, onPreviousClick: () -> Unit, onNextClick: ()-> Unit) {
-    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White)) {
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -102,7 +94,8 @@ fun ArtWorkView(catInfo: CatInfo, onPreviousClick: () -> Unit, onNextClick: ()->
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
-                    .border(20.dp, Color.Gray).testTag("ArtWorkImage")
+                    .border(20.dp, Color.Gray)
+                    .testTag("ArtWorkImage")
             )
         }
         Box(
