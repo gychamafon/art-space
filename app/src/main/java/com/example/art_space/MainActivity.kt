@@ -69,10 +69,12 @@ fun ArtSpaceCard() {
         ))
     }
 
+    val maxStep = cats.value.size
+
     ArtWorkView(
         catInfo = cats.value[currentStep - 1],
-        onPreviousClick = { currentStep = if (currentStep > 1) currentStep - 1 else 6 },
-        onNextClick = { currentStep = if (currentStep < 6) currentStep + 1 else 1 }
+        onPreviousClick = { currentStep = if (currentStep > 1) currentStep - 1 else maxStep },
+        onNextClick = { currentStep = if (currentStep < maxStep) currentStep + 1 else 1 }
     )
 
 }
